@@ -1,0 +1,115 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{3-1}{inproceedings}{}
+      \name{author}{5}{}{%
+        {{hash=6ced752f25c1d3942c944ce05ba236da}{%
+           family={Smith},
+           familyi={S\bibinitperiod},
+           given={Jack\bibnamedelima W},
+           giveni={J\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=1552772d36d84abfe2e4b2811dec0c6f}{%
+           family={Everhart},
+           familyi={E\bibinitperiod},
+           given={JE},
+           giveni={J\bibinitperiod}}}%
+        {{hash=5c89d089f238f02f88e1a723989be6e8}{%
+           family={Dickson},
+           familyi={D\bibinitperiod},
+           given={WC},
+           giveni={W\bibinitperiod}}}%
+        {{hash=b3de4e05022db5b81e85e4a109a6dd67}{%
+           family={Knowler},
+           familyi={K\bibinitperiod},
+           given={WC},
+           giveni={W\bibinitperiod}}}%
+        {{hash=f17c7a904b4981b09deb3635df75f02b}{%
+           family={Johannes},
+           familyi={J\bibinitperiod},
+           given={RS},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {American Medical Informatics Association}%
+      }
+      \strng{namehash}{eef820970558aee7ffcb50367d1a7356}
+      \strng{fullhash}{f4abe56f75f1531fb4d4db512a274e9f}
+      \strng{bibnamehash}{eef820970558aee7ffcb50367d1a7356}
+      \strng{authorbibnamehash}{eef820970558aee7ffcb50367d1a7356}
+      \strng{authornamehash}{eef820970558aee7ffcb50367d1a7356}
+      \strng{authorfullhash}{f4abe56f75f1531fb4d4db512a274e9f}
+      \field{sortinit}{1}
+      \field{sortinithash}{2174f786c6195e7fe2ee1c229b416e29}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the Annual Symposium on Computer Application in Medical Care}
+      \field{title}{Using the ADAP learning algorithm to forecast the onset of diabetes mellitus}
+      \field{year}{1988}
+      \field{pages}{261}
+      \range{pages}{1}
+    \endentry
+    \entry{sklearn-svc}{online}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{cbff857e587bcb4635511624d773949e}
+      \field{labeltitlesource}{title}
+      \field{title}{C-Support Vector Classification. sklearn.svm.SVC documentation}
+      \field{urlday}{5}
+      \field{urlmonth}{4}
+      \field{urlyear}{2020}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://tex.stackexchange.com/questions/3587/how-can-i-use-bibtex-to-cite-a-web-page
+      \endverb
+      \verb{url}
+      \verb https://tex.stackexchange.com/questions/3587/how-can-i-use-bibtex-to-cite-a-web-page
+      \endverb
+    \endentry
+    \entry{3-2}{article}{}
+      \name{author}{1}{}{%
+        {{hash=a06cb179cc76bba354aed3bb1b8313c0}{%
+           family={Hansen},
+           familyi={H\bibinitperiod},
+           given={JF},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{a06cb179cc76bba354aed3bb1b8313c0}
+      \strng{fullhash}{a06cb179cc76bba354aed3bb1b8313c0}
+      \strng{bibnamehash}{a06cb179cc76bba354aed3bb1b8313c0}
+      \strng{authorbibnamehash}{a06cb179cc76bba354aed3bb1b8313c0}
+      \strng{authornamehash}{a06cb179cc76bba354aed3bb1b8313c0}
+      \strng{authorfullhash}{a06cb179cc76bba354aed3bb1b8313c0}
+      \field{sortinit}{3}
+      \field{sortinithash}{a4b52e5432884761f50fb9571273b93e}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Danish medical bulletin}
+      \field{number}{6}
+      \field{title}{The clinical diagnosis of ischaemic heart disease due to coronary artery disease.}
+      \field{volume}{27}
+      \field{year}{1980}
+      \field{pages}{280\bibrangedash 286}
+      \range{pages}{7}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

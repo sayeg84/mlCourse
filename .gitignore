@@ -1,0 +1,7 @@
+*.aux
+*.out
+*.nav
+*.log
+*.snm
+*.bcf
+*.xml

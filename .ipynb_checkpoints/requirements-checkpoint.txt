@@ -1,0 +1,6 @@
+glmnet
+matplotlib
+numpy
+pandas
+sklearn
+tensorflow

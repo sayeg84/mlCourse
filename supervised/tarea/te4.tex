@@ -1,0 +1,212 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[style=numeric,sorting=none]{biblatex}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+\usepackage{listingsutf8}
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.99,0.995,0.99}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\decimalpoint
+% adding references
+\addbibresource{../../referencias.bib}
+%auxiliar commands
+\newcommand{\work}{Tarea-Examen 4: Métodos de Remuestreo}
+%changes space between lines of equations
+\setlength{\jot}{10pt}
+%changes space between text and equations
+\setlength{\abovedisplayskip}{100pt}
+\setlength{\belowdisplayskip}{100pt}
+\setlength{\abovedisplayshortskip}{100pt}
+\setlength{\belowdisplayshortskip}{100pt}
+% theorem environment in case I need it
+\newtheorem{theorem}{Teorema}
+%make header
+\pagestyle{fancy}
+\fancyhf{}
+\vspace{1cm}
+\rhead{}
+\lhead{\work}
+\cfoot{\thepage}
+% Text info
+\title{\textbf{\work}}
+\author{Curso Avanzado de Estadística. Profa. Guillermina Eslava Gómez.\\ \\ Aldo Sayeg Pasos Trejo. César Cossio Guerrero. \\ \\ Posgrado en Ciencias Matemáticas. Universidad Nacional Autónoma de México. }
+\date{\today}
+\begin{document}
+\maketitle
+\section{Problema 1}
+Buscamos evaluar los modelos presentados en el problema 1 de la tarea-examen 3 con los métodos de Bootstrap y repeated Training/Test. Para no tener que acudir al otro reporte, la tabla \ref{1-var} muestra los modelos agrupados por el método de clasificación junto con las variables que usan.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{p{3cm}|p{7cm} | c}
+        Método & Variables en el modelo & Notas extra\\
+        \hline
+        Análisis de Discriminante Lineal & ``npreg'', ``glu'', ``bp'', ``skin'', ``bmi'', ``ped'', ``age'', ``type'', ``ped*age'' & -\\
+        & & \\
+        Naive Bayes & ``npreg'', ``glu'', ``bp'', ``skin'', ``bmi'', ``ped'', ``age'', ``type'', ``ped*bp'' & -\\
+        & & \\
+        Regresión logística & ```glu'', ``bmi'', ``ped'',  ``age'',  ``age$^2$'' & - \\
+        & & \\
+        Support Vector Machines & ``npreg'', ``glu'', ``bp'', ``skin'', ``bmi'', ``ped'', ``age'', ``type'' & Kernel Polynomial de grado 5 \\
+    \end{tabular}
+    \caption{Variables de los modelos}
+    \label{1-var}
+\end{table}
+\subsection{Bootstrap}
+La tabla \ref{1-bootstrap} muestra las tasas de error obtenidas mediante el método de Bootstrap para cada modelo. Se promedio sobre $B=500$ iteraciones.
+\begin{table}[H]
+    \centering
+    \input{41-boot.tex}
+    \caption{Errores aparentes globales y locales obtenidos mediante Bootstrap}
+    \label{1-bootstrap}
+\end{table}
+\subsection{Training/Test}
+La tabla \ref{1-traintest} muestra las tasas de error obtenidas mediante el método de Bootstrap para cada modelo. Ya que en el trabajo anterior con modelo se mostró que para fracciones de entrenamiento mayores al 50 \% la variación del error aparente era pequeña, se tomó como fracción de entrenamiento el 75 \% de la muestra y se valido con el restante 25 \%. Los conjuntos de entrenamiento y prueba fueron separados manteniendo proporcionalidad de las clases. Se promedio sobre $B=500$ iteraciones.
+\begin{table}[H]
+    \centering
+    \input{41-traintest}
+    \caption{Errores no aparentes globales y locales obtenidos mediante separación en training test }
+    \label{1-traintest}
+\end{table}
+\subsection{Conclusiones}
+Para tener una mejor idea de los resultados anterior, podemos compararlos con los resultados obtenidos previamente respecto al error aparente, que se muestran en la tabla \ref{1-apparent}
+\begin{table}[H]
+    \centering
+    \input{41-apparent}
+    \caption{Errores no aparentes globales y locales obtenidos mediante separación en training test }
+    \label{1-apparent}
+\end{table}
+Es claro que para bootstrap las tasas de errores parecen ser mucho menores. Sin embargo, si se analiza la desviación estandar de la muestra de $500$ tasas de errores, esta es muy alta, casi del orden de magnitud de dichas tasas, por lo que no podemos tomarlas como las más optimas. Por otro lado, las tasas obtenidas por training/test son mucho más cercanas a las tasas aparentes. En ese sentido, podemos confiar mucho más en ese método para validar la muestra. 
+\\
+\\El hecho de que todas las tasas de error hayan sido más altas en los métodos usados nos da la idea de que si hay una utilidad en evaluar a los modelos con estos métodos, pues dichas tasas de error pueden resultar más estrictas con nuestro modelo que simplemente la tasa aparente.
+\section{Problema 2}
+Evaluaremos los modelos presentados en el problema 3 de la tarea-examen 3 con los métodos de repeated Training/Test y Cross Validation. Para no tener que acudir al otro reporte, la tabla \ref{1-var} muestra los modelos agrupados por el método de clasificación junto con las variables que usan.
+\begin{table}[H]
+    \centering
+    \begin{tabular}{p{3cm}|p{7cm} | c}
+        Método & Variables en el modelo & Notas extra\\
+        \hline
+        Naive Bayes & ``Sex'', ``AngPec'', ``AMI'', ``QWave'', ``QWavecode'', ``STcode'', ``STchange'', ``SuffHeartF'', ``Hyptertrophi'', ``Hyperchol'', ``Smoker'', ``Inherit'', ``Heartfail'', ``CAD'', ``Sex*AMI'' & -\\
+        & & \\
+        Regresión logística & ``AngPec'',``AMI'', ``STcode'',``STchange'', ``Hyperchol''' & - \\
+        & & \\
+        Support Vector Machines & ``Sex'', ``AngPec'', ``AMI'', ``QWave'', ``QWavecode'', ``STcode'', ``STchange'', ``SuffHeartF'', ``Hyptertrophi'', ``Hyperchol'', ``Smoker'', ``Inherit'', ``Heartfail'', ``CAD'' & Kernel Polynomial de grado 5 \\
+    \end{tabular}
+    \caption{Variables de los modelos}
+    \label{2-var}
+\end{table}
+\subsection{Validación cruzada}
+Se obtuvieron errores no aparentes mediante validación cruzada dividiendo la muestra en $k=5$ partes iguales, cada una manteniendo la proporcionalidad original entre las clases de las observaciones. La decisión del valor de $k$ nuevamente se tomó teniendo en cuenta que eso permitia que la fracción de entrenamiento consistiera del 80 \% del conjuto original, que sabemos, por el trabajo anterior, es suficiente para entrenar al dicho modelo. Se realizaron $B=500$ repeticiones de este proceso. La tabla \ref{2-crossval} muestra los resultados obtenidos
+\begin{table}[H]
+    \centering
+    \input{42-crossval.tex}
+    \caption{Errores no aparentes globales y locales obtenidos mediante validación cruzada para $k=5$}
+    \label{2-crossval}
+\end{table}
+\subsection{Training/Test}
+La tabla \ref{2-traintest} muestra las tasas de error obtenidas mediante el método de training/test` para cada modelo. Se tomó como fracción de entrenamiento el 75 \% de la muestra y se valido con el restante 25 \%. Los conjuntos de entrenamiento y prueba fueron separados manteniendo proporcionalidad de las clases. Se promedio sobre $B=500$ iteraciones.
+\begin{table}[H]
+    \centering
+    \input{42-traintest}
+    \caption{Errores no aparentes globales y locales obtenidos mediante separación en training test }
+    \label{2-traintest}
+\end{table}
+\subsection{Conclusiones}
+Nuevamente, para evaluar estas tasas, podemos comparar con las tasas no aparentes obtenidas anteriormente, que se muestran en la tabla \ref{2-apparent}
+\begin{table}[H]
+    \centering
+    \input{42-apparent}
+    \caption{Errores no aparentes globales y locales obtenidos mediante separación en training test }
+    \label{2-apparent}
+\end{table}
+En este caso, las tasas obtenidas tanto por validación cruzada como por training/test son más altas que las tasa aparentes. Esto se puede explicar debido a que el modelo ajustado y evaluado con todos los datos es más preciso debido a que tiene más observaciones sobre cuales ajustar. Si las observaciones son lo suficientemente ``sencillas'' para clasificarlas bien, siempre será mejor tener más datos para evaluar el modelo.
+\\
+\\En particular, para el caso de la support vector machine, la tasa aparente global es mucho menor que las tasas obtenidas por los otros métodos. Es particularmente interesante que eso suceda para este modelo pues es el que presenta la tasa de clasificación más baja. En ese sentido, podemos concluir que los métodos de remuestreo presentaron evaluaron peor a nuestros modelos en las tasas locales y globales. Podemos utilizarlas 
+\section{Problema 3}
+Buscamos evaluar el modelo predictivo presentado en el problema 3 de la tarea-examen 3. La tabla \ref{3-models} muestra las variables del modelo predictivo. Debemos recordar que el modelo utilizaba el método de regresión logística multinomial, tomando como referencia la clase ``Chemical'' del conjunto de datos. 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|p{7cm}|c}
+        Modelo & Variables & Notas \\
+        \hline
+        Predictivo & ``InsulinResp'', ``Fglucose*InsulinResp'' , ``GlucoseInt*InsulinResp'' & - \\
+    \end{tabular}
+    \caption{Modelo predictivo}
+    \label{3-models}
+\end{table}
+\subsection{Bootstrap}
+La tabla \ref{3-boot} muestra las tasas de error por Bootstrap para $B=500$ repeticiones
+\begin{table}[H]
+    \centering
+    \input{43-boot.tex}
+    \caption{Errores no aparentes globales y locales obtenidos mediante Bootstrap}
+    \label{3-boot}
+\end{table}
+\subsection{Validación cruzada}
+Para la validación cruzada, separamos a la muestra en $k=5$ partes iguales, usando 4 para entrenar al modelo y la restante para evaluarlo. Dicha separación mantenía la proporcionalidad en las clases de los conjuntos particionados. Se realizaron 500 iteraciones de dicho proceso para obtener las tasas de error que se muestran en la tabla \ref{3-crossval}    
+\begin{table}[H]
+    \centering
+    \input{43-crossval.tex}
+    \caption{Errores no aparentes globales y locales obtenidos mediante validación cruzada para $k=5$}
+    \label{3-crossval}
+\end{table}
+\subsection{Training/Test}
+Para training/test, se dividió al conjunto de datos en un conjunto de entrenamiento de 75 \% del tamaño original y se entrenó con el restante 25 \% Los porcentajes se escogieron con el mismo argumento de que, como se mostró en la tarea 3, la tasa de no aparente presenta estabilidad a partir del 50 \%. Nuevamente, esta división se hizo para siempre mantener la proporcionalidad de las clases entre los conjuntos separados .Las tasas de error que se muestran en la tabla \ref{3-traintest}
+\begin{table}[H]
+    \centering
+    \input{43-traintest.tex}
+    \caption{Errores no aparentes globales y locales obtenidos mediante training/test}
+    \label{3-traintest}
+\end{table}
+\subsection{Conclusiones}
+Podemos realizar la comparación con las tasas aparentes obtenidas anteriormente, que se muestran en la tabla \ref{3-apparent}
+\begin{table}[H]
+    \centering
+    \input{43-apparent.tex}
+    \caption{Errores no aparentes globales y locales obtenidos mediante training/test}
+    \label{3-apparent}
+\end{table}
+Solo en el caso de Bootstrap, el error global aparece menor que el error global aparente. En todos los demás, los errores aparecen mayores a los aparentes. Esto quiere indicar que quizá Bootstrap no sea el mejor método para evaluar a nuestro modelo. Los otros métodos presentan lo esperado: un alza en las tasas de error, por lo que si podríamos utilizarlos para evaluar con mayor rigurosidad a nuestro modelo.
+\\
+\\Ya que el modelo presentado nos interesa solamente en términos predictivos, podríamos utilizar la validación cruzada o el training/test como evaluación del modelo en un algoritmo que seleccione modelos óptimos.
+\pagebreak
+%\section*{Anexo 1: Código en Python de los problemas}
+%\lstinputlisting[language=Python]{tarea4.py}
+\printbibliography
+\end{document}

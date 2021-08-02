@@ -1,0 +1,435 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+%\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.99,0.995,0.99}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\decimalpoint
+%auxiliar commands
+\newcommand{\work}{Tarea-Examen 2: Aprendizaje No Supervisado}
+\newcommand{\de}[1]{\text{deg}  \left( #1 \right)}
+\newcommand{\dee}[2]{\text{deg}_{#2}  \left( #1 \right)}
+\newcommand{\id}[1]{\text{id}  \left( #1 \right)}
+\newcommand{\od}[1]{\text{od}  \left( #1 \right)}
+\newcommand{\Aut}[1]{\text{Aut}  \left( #1 \right)}
+%changes space between lines of equations
+\setlength{\jot}{10pt}
+%changes space between text and equations
+\setlength{\abovedisplayskip}{100pt}
+\setlength{\belowdisplayskip}{100pt}
+\setlength{\abovedisplayshortskip}{100pt}
+\setlength{\belowdisplayshortskip}{100pt}
+% theorem environment in case I need it
+\newtheorem{theorem}{Teorema}
+%make header
+\pagestyle{fancy}
+\fancyhf{}
+\vspace{1cm}
+\rhead{Aldo Sayeg Pasos Trejo}
+\lhead{\work}
+% Text info
+\title{\textbf{\work}}
+\author{Curso Avanzado de Estadística. Profa. Guillermina Eslava Gómez.\\ \\ Aldo Sayeg Pasos Trejo. \\ \\ Posgrado en Ciencias Matemáticas. Universidad Nacional Autónoma de México. }
+\date{\today}
+\begin{document}
+\maketitle
+\section{Ejercicio 8}
+\subsection{Incisos a) y b)}
+El ejercicio, en ambos incisos, nos piden aplicar un análisis de componentes principales y calcular la proporción de la varianza explicada (PVE, por sus siglas en inglés), primero utilizando algún paquete de Software y después utilizando la siguiente fórmula
+para el PVE de la m-ésima componente
+\begin{equation}
+    \label{pve}
+    \text{PVE}_m = \frac{\sum_{i=1}^n \left( \sum_{j=1}^p \phi_{jm} x_{ij} \right)^2} {\sum_{j=1}^p \sum_{i=1}^n x_{ij}^2 }
+\end{equation}
+Dónde $x_{ij}$ es la variable $j$ de la observación $i$ y $\phi_{jm}$ es el coeficiente de $X_j$ para la componente principal $m$.
+\\
+\\Invitamos al lector a consultar el anexo 2 del presente trabajo para encontrar el código con el que se realizaron dichos cálculos. Nosotros presentamos solo los siguientes resultados. Los datos tienen la siguiente forma
+\begin{table}[H]
+    \centering
+    \input{1-head.tex}
+    \caption{Primeras observaciones de los datos}
+    \label{1-head}
+\end{table}
+Al estandarizar los datos para que tengan $\sigma^2 = 1$ y $\mu = 0$ y realizar el análisis de componentes principales, obtenemos los siguientes resultados para los coeficientes
+\begin{table}[H]
+    \centering
+    \input{1-coeffTable.tex}
+    \caption{Coeficientes de la transformación a componentes principales}
+    \label{1-coeffTable}
+\end{table}
+Las tablas de la PVE se presentan a continuación
+\begin{table}[H]
+    \centering
+    \input{1-pve.tex}
+    \caption{PVE calculado por el la librería \texttt{sklean} en Python 3}
+    \label{1-pve}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{1-pveForm.tex}
+    \caption{PVE calculado manualmente con la ecuación \ref{pve}}
+    \label{1-pveForm}
+\end{table}
+\section{Ejercicio 9}
+Trabajando con los mismos datos del inciso anterior, lo primero que debemos hacer es realizar clustering jerárquico, utilizando la métrica euclideana para medir la distancia entre puntos y distintos tipos de enlaces para medir la distancia entre clusters. Los dendrogramas resultantes del clustering pueden consultarse en las figuras 
+\ref{2-completeoriginal}, \ref{2-completestandarized}, \ref{2-completewithmean}, \ref{2-singleoriginal}, \ref{2-singlestandarized}, \ref{2-singlewithmean}, \ref{2-averageoriginal}, \ref{2-averagestandarized} y  \ref{2-averagewithmean} del Anexo 2 a este trabajo.
+\\
+\\Para analizar la diferencia entre los nueve clusterings realizados y poder observarlos de manera más sencilla que en los dendogramas, la tabla \ref{2-clusresults} del Anexo 1 muestra las etiquetas obtenidas entre los distintos clusters. En la tabla podemos ver claramente, que, para un tipo de enlace dado, los resultados entre los datos estandarizados y con desviación estándar $1$ son los mismos, mientras que para los datos originales se obtienen distintos clusters. 
+\\
+\\Para responder a la pregunta de si los datos deben de estandarizarse antes de calcular las ditancias entre observaciones, la respuesta es que si se debe de hacer, debido a que las variables de los datos pueden estar en distintas escalas. Es decir, es posible que una variable esté en un intervalo más grande que la otra por lo que, al calcular la distancia entre dos observaciones, dicha variable tenga mucho más influencia sobre el valor final de la distancia.
+\\
+\\Para los datos que presentamos, por ejemplo, es claro que la escala de la variable  ``Assault'' es mucho menor que la de la variable ``Murder'', lo que implica que puntos con un valor parecido de ``Murder'' pero muy distinto de ``Assault'' pueden considerarse muy similares. Este efecto, en principio, no es deseado, pues generalmente usamos como hipótesis que todas las variables deben de ser significativas. 
+\\
+\\En general, recomendamos estandarizar los datos antes de realizar un proceso de clustering.
+\section{Ejercicio 10}
+\subsection{Inciso a)}
+Para este ejercicio, debemos de realizar generar 60 observaciones en 50 variables, que se puedan diferenciar en tres grupos de 20 observaciones. Generamos las variables $X_i = (x_{i1},\ldots, x_{i50})$ tales que $x_{ij} \sim U(0,1)$ y realizamos les añadimos una media para diferenciar a los tres grupos de la siguiente manera:
+\begin{equation}
+    Z_i = \begin{cases}
+        X_i + \bm{\hat{e}_1} & \text{Si } 1 \leq i \leq 20 \\
+        X_i + \bm{\hat{e}_2} & \text{Si } 21 \leq i \leq 41 \\
+        X_i + \bm{\hat{e}_3} & \text{Si } 41 \leq i \leq 60 \\
+    \end{cases}
+\end{equation}
+Con $\bm{\hat{e}_i} \in \mathbb{R}^{50}$ el $i$-ésimo vector de la base canónica de $\mathbb{R}^{50}$.
+\subsection{Inciso b)}
+Realizamos ahora PCA sobre las observaciones y graficamos las dos componentes principales, como muestra la figura \ref{3-pca}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{3-pca}
+    \caption{Primeras dos componentes principales para las 60 observaciones generadas. Cada color representa que son de un grupo distinto}
+    \label{3-pca}
+\end{figure}
+En la figura podemos observar que las observaciones se separan en los tres grupos de manera muy clara en el espacio de las componentes principales.
+\subsection{Incisos c), d), e) y g)}
+Pretendemos ahora usar el algoritmo de $K$-means para realizar clustering sobre las observaciones originales, estandarizadas y con desviación estándar 1 para $K=3,2,4$. Presentamos los resultados de dicho clustering graficando las tres primeras componentes de los vectores $Z_i$ y marcando clusters distintos con colores distintos.
+\\
+\\La tabla \ref{3-clusresults} muestra que con los datos originales la separación en grupos originales siempre se logra, a excepción de uno o dos puntos, para $K=3$. Para $K=2$, dos de estos grupos se fusionan, mientras que para $K=4$ un grupo se separa en dos y dos de los originales se  mantienen relativamente bien.
+\\
+\\Un comportamiento parecido se obtiene cuando hacemos que los datos tengan $\sigma^2 = 1$, aunque con menor calidad en los resultados. Sin embargo, si estandarizamos los datos, el algoritmo deja de distinguir los grupos. La explicación a esto es clara, ya que por la construcción de los datos, lo que diferencía a cada grupo es una constante que se suma, que se quita de todos cuando le quitamos el valor promedio, por lo que los datos vuelven a su distribución aleatoria y no existe una distinción clara entre ellos.
+\subsection{Inciso f)}
+Las gráficas \ref{3-2pcs-2}, \ref{3-2pcs-3} y \ref{3-2pcs-4} muestran los resultados de aplicar el clustering sobre las dos primeras componentes principales para $K=3,4,2$, mientrasl que la tabla \ref{3-clusresults-pca}. Para $K=3$ la separación se logra de manera normal y óptima, mientras que para $K=2$ dos grupos se fusionan en uno y para $K=4$ los grupos uno y dos se dividen en tres grupos.
+\section{Ejercicio 11}
+Dato un conjunto de 40 tejidos que son representados por 1000 genes, sabemos a priori que los 20 primeros tejidos son muestras sanas mientras que los últimos 20 genes son de tejido enfermo. 
+\subsection{Inciso b)}
+Queremos aplicar clustering jerárquico a los datos usando distancia basada en correlación para separarlos en dos grupos. El dendrograma resultante para las 9 combinaciones de los datos originales, estandarizados y con $\sigma^2 = 1$ y para los tres tipos de enlace entre clusters se muestran en las figuras \ref{4-completeoriginal}, \ref{4-completestandarized}, \ref{4-completewithmean}, \ref{4-singleoriginal}, \ref{4-singlestandarized}, \ref{4-singlewithmean}, \ref{4-averageoriginal}, \ref{4-averagestandarized} y  \ref{4-averagewithmean}.
+\\
+\\Para la tabla \ref{4-clusres} muestra el etiquetado obtenido a partir de estos algoritmos. Como podemos ver, los únicos datos en los cuales el clutering jerárquico si logra dividirlos en los dos grupos conocidos es para los datos estandarizados. Para los tipos de datos, el resultado varia según el tipo de enlace pero en general podemos afirmar que no  se separan en los grupos buscados o en un caso (enlace promedio y datos con $\sigma^2 = 1$) no hay dos grupos pues un tejido termina siendo su propio cluster.
+\\
+\\Notemos que, para los datos estandarizados, la separación en los dos grupos conocidos se cumple para cualquier enlace entre clusters, es decir, es independiente del enlace. Podemos concluir que, para este conjunto de datos, la estandarización si resulta necesaria para obtener resultados satisfactorios.
+\subsection{Inciso c)}
+Queremos ahora determinar cual es el conjunto de genes que difieren más entre ambos grupos. Claramente no hay una manera axiomática de resolver este problema, por lo presentamos tres métodos utilizados para abordar dicho poblema.
+\subsubsection{Método 1: maximizar la norma de la matriz de diferencias}
+Para cada gen $k$, definimos la matriz de diferencias $A^{(k)}$ de la siguiente forma
+\begin{equation}
+    A^{(k)}_{ij} = x_{ik} - x_{jk}
+\end{equation}
+Es decir, $A^{(k)}_{ij}$ es la diferencia del valor del gen $k$ entre los tejidos $i,j$. Recordando que la norma de Frobenius de una matriz $D$ de $n \times m$ es
+\begin{equation}
+    |D| = \sqrt{ \sum_{i=1}^{n} \sum_{j=1}^{m} |D_{ij}|^2 }
+\end{equation}
+Es claro que la norma de Frobenius de la matriz $A^{(k)}$ cuantifica cuanto varían las observaciones entre ambos grupos. Así, podemos decir entonces que los genes con mayor variación son aquellos cuya matriz de variación es máxima. La tabla \ref{4-variance-distance} en el Anexo 1 presenta cuales son los 20 genes que maximizan dicho valor. 
+\subsubsection{Método 2: quitar un subconjunto de genes y ver si el clustering se logra}
+En principio, el conjunto de variables que varía más es el conjunto de genes tales que al removerlos de los datos de los tejidos e intentar hacer clustering jerárquico sobre los genes restantes, este no divide a los tejidos en los dos grupos conocidos.
+\\
+\\Sabemos que hay $\frac{1000!}{n!(1000-n)!}$ subconjuntos de $n$ genes, por lo que es muy complicado ir probando con todos los subconjuntos de distintos tamaños para utilizar este método. Sin embargo, una manera más simple sería empezar simplemente remover un gen del conjunto de datos y ver si el clustering se logra.
+\\
+\\Se implementó dicho procedimiento en el código y lo que se obtuvo, en principio, es que solo removiendo un gen de los datos, de igual manera se logra hacer el clustering jerárquico para los tres tipos de enlace, por lo que este método no nos resulta satisfactorio quitando solo un gen.
+\\
+\\Por el tiempo de cómputo, no se intentó realizar la prueba quitando subconjuntos de más de un gen.
+\subsubsection{Método 3: intentar hacer clustering con solo un subconjunto de genes}
+Pensando el problema de manera inversa al método anterior, podríamos pensar que si logramos realizar el clustering en los dos grupos conocidos utilizando un subconjunto mínimo de genes, esos son los que permiten distinguirlos en ambos grupos y los que varían más. Nuevamente, por el número de subconjuntos, esto no es práctico.
+\\
+\\Nos limitamos a analizar el clustering utilizando solamente un gen y ver si era posible diferenciarlos en los grupos buscados. No resultó posible hacer dicha separación con un solo gen de manera perfecta. Sin embargo, podemos cuantificar, con la ecuación \ref{erroratio}, la razón de errores de cada clasificación con un solo gen:
+\begin{equation}
+    \label{erroratio}
+    \text{error} = \frac{N_{\text{aciertos}}}{N_{tejidos}}
+\end{equation}
+La tabla \ref{4-errors-ratio} en el Anexo 1 presenta cuales son los 20 genes que maximizan dicho valor para distintos tipos de enlace
+\subsubsection{Conclusiones}
+Al comprar los genes obtenidos por los métodos 1 y 3, es claro que el conjunto de genes contiene varios en común. En particular, el gen 501 aparece como el más variante en ambos métodos.
+\\
+\\Debido a esta coincidencia en resultados, consideramos que los resultados arrojados por ambos métodos son satisfactorios.
+\\
+\\
+Además, notemos que el haber tomado 20 genes fue arbitario. En general, podríamos usarlos para ordenar los genes según su variación.
+\pagebreak
+\section*{Anexo 1: Tablas relevantes}
+\subsection*{Resultados del clustering para el ejercicio 9}
+\input{2-clusresults.tex}
+\begin{table}[H]
+    \centering
+    \centering
+    \caption{Resultados de clustering con distintas escalas en los datos y distintos tipos de enlace}
+    \label{2-clusresults}
+\end{table}
+\subsection*{Resultados del clustering para el ejercicio 10}
+\input{3-clusresults.tex}
+\begin{table}[H]
+    \centering
+    \centering
+    \caption{Resultados de clustering con $K$-means para datos originales, estandarizados y con $\sigma^2 = 1$ para distintos $K$}
+    \label{3-clusresults}
+\end{table}
+\input{3-clusresults-pca.tex}
+\begin{table}[H]
+    \centering
+    \centering
+    \caption{Resultados de clustering con $K$-means para las dos primeras componentes principales de los datos, estandarizados y con $\sigma^2 = 1$ para distintos $K$}
+    \label{3-clusresults-pca}
+\end{table}
+\subsection*{Resultados del clustering para el ejercicio 11}
+\input{4-clusres.tex}
+\begin{table}[H]
+    \centering
+    \centering
+    \caption{Resultados de clustering con distintas escalas en los datos y distintos tipos de enlace}
+    \label{4-clusres}
+\end{table}
+\subsection*{Método 3 del inciso c) del ejercicio 11}
+\input{4-variance-distance.tex}
+\begin{table}[H]
+    \centering
+    \centering
+    \caption{Genes que minimizan la razón de errores}
+    \label{4-variance-distance}
+\end{table}
+\subsection*{Método 3 del inciso c) del ejercicio 11}
+\input{4-errors-ratio.tex}
+\begin{table}[H]
+    \centering
+    \centering
+    \caption{Genes que minimizan la razón de errores}
+    \label{4-errors-ratio}
+\end{table}
+\section*{Anexo 2: Figuras relevantes}
+\subsection*{Dendrogramas para el ejercicio 10}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-completeoriginal.pdf}
+    \caption{Clustering para datos originales con enlace completo}
+    \label{2-completeoriginal}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-completestandarized.pdf}
+    \caption{Clustering para datos estandarizados con enlace completo}
+    \label{2-completestandarized}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-completewithmean.pdf}
+    \caption{Clustering para datos con $\sigma^2 = 1$ con enlace completo}
+    \label{2-completewithmean}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-singleoriginal.pdf}
+    \caption{Clustering para datos originales con enlace completo}
+    \label{2-singleoriginal}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-singlestandarized.pdf}
+    \caption{Clustering para datos estandarizados con enlace completo}
+    \label{2-singlestandarized}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-singlewithmean.pdf}
+    \caption{Clustering para datos con $\sigma^2 = 1$ con enlace completo}
+    \label{2-singlewithmean}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-averageoriginal.pdf}
+    \caption{Clustering para datos originales con enlace completo}
+    \label{2-averageoriginal}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-averagestandarized.pdf}
+    \caption{Clustering para datos estandarizados con enlace completo}
+    \label{2-averagestandarized}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{2-averagewithmean.pdf}
+    \caption{Clustering para datos con $\sigma^2 = 1$ con enlace completo}
+    \label{2-averagewithmean}
+\end{figure}
+\subsection*{Resultados del clustering con $K$-means para el ejercicio 10}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-original-3.pdf}
+    \caption{Clustering para datos originales con $K =3$}
+    \label{3-original-3}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-original-2.pdf}
+    \caption{Clustering para datos originales con $K =2$}
+    \label{3-original-2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-original-4.pdf}
+    \caption{Clustering para datos originales con $K =4$}
+    \label{3-original-4}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-standarized-3.pdf}
+    \caption{Clustering para datos estandarizados con $K = 3$}
+    \label{3-standarized-3}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-standarized-2.pdf}
+    \caption{Clustering para datos estandarizados con $K = 2$}
+    \label{3-standarized-2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-standarized-4.pdf}
+    \caption{Clustering para datos estandarizados con $K = 4$}
+    \label{3-standarized-4}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-withmean-3.pdf}
+    \caption{Clustering para datos con $\sigma^2=1$ con $K = 3$}
+    \label{3-withmean-3}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-withmean-2.pdf}
+    \caption{Clustering para datos con $\sigma^2=1$ con $K = 2$}
+    \label{3-withmean-2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-withmean-4.pdf}
+    \caption{Clustering para datos con $\sigma^2=1$ con $K = 4$}
+    \label{3-withmean-4}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-2pcs-3.pdf}
+    \caption{Clustering sobre las primeras dos componentes principales con $K = 3$}
+    \label{3-2pcs-3}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-2pcs-2.pdf}
+    \caption{Clustering sobre las primeras dos componentes principales con $K = 2$}
+    \label{3-2pcs-2}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.75\textwidth]{3-2pcs-4.pdf}
+    \caption{Clustering sobre las primeras dos componentes principales con $K = 4$}
+    \label{3-2pcs-4}
+\end{figure}
+\subsection*{Dendogramas para el ejercicio 11}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-completeoriginal.pdf}
+    \caption{Clustering para datos originales con enlace completo}
+    \label{4-completeoriginal}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-completestandarized.pdf}
+    \caption{Clustering para datos estandarizados con enlace completo}
+    \label{4-completestandarized}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-completewithmean.pdf}
+    \caption{Clustering para datos con $\sigma^2 = 1$ con enlace completo}
+    \label{4-completewithmean}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-singleoriginal.pdf}
+    \caption{Clustering para datos originales con enlace completo}
+    \label{4-singleoriginal}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-singlestandarized.pdf}
+    \caption{Clustering para datos estandarizados con enlace completo}
+    \label{4-singlestandarized}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-singlewithmean.pdf}
+    \caption{Clustering para datos con $\sigma^2 = 1$ con enlace completo}
+    \label{4-singlewithmean}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-averageoriginal.pdf}
+    \caption{Clustering para datos originales con enlace completo}
+    \label{4-averageoriginal}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-averagestandarized.pdf}
+    \caption{Clustering para datos estandarizados con enlace completo}
+    \label{4-averagestandarized}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.90\textwidth]{4-averagewithmean.pdf}
+    \caption{Clustering para datos con $\sigma^2 = 1$ con enlace completo}
+    \label{4-averagewithmean}
+\end{figure}
+
+\pagebreak
+\section*{Anexo 3: código en Python de los problemas}
+\lstinputlisting[language=Python]{tarea2.py}
+\begin{thebibliography}{9}
+    \bibitem{isl} Hastie et al. \textit{An Introduction to Statitistical Learning}. Editorial Springer.  Séptima edición. 2013.
+\end{thebibliography}
+\end{document}

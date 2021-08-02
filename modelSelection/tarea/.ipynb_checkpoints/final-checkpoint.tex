@@ -1,0 +1,13 @@
+\begin{tabular}{c|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}|p{2cm}}
+\toprule
+{} &                             model &  Dfs &    R\textasciicircum 2 &  Aparent error &  Non aparent error &  Non aparent error std \\
+\midrule
+1 &                        step (AIC) &   52 & 0.9199 &         0.4245 &             0.5614 &                 0.0214 \\
+2 &                        step (BIC) &   32 & 0.9107 &         0.4733 &             0.5575 &                 0.0141 \\
+3 &                       Best subset &   10 & 0.8585 &         0.7500 &             0.7826 &                 0.0077 \\
+4 &        lasso, lambda\_1se = 0.0286 &   28 & 0.8871 &         0.5983 &             0.6639 &                 0.0490 \\
+5 &        ridge, lambda\_1se = 0.5742 &   92 & 0.8807 &         0.6323 &             0.7241 &                 0.0511 \\
+6 &  elastic net, lambda\_1se = 0.0474 &   35 & 0.8899 &         0.5837 &             0.6592 &                 0.0484 \\
+7 &        Random Forest, Nboot = 100 &   91 & 0.9932 &         0.0363 &             0.3036 &                 0.0124 \\
+\bottomrule
+\end{tabular}

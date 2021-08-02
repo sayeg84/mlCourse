@@ -1,0 +1,33 @@
+\begin{longtable}{p{6cm}lccccc}
+\toprule
+{} &         df &     sum\_sq &  mean\_sq &       F &  \$P (> F\$) \\
+Variable                                          &            &            &          &         &            \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{{Continued on next page}} \\
+\midrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+Rd\_Class                                          &     2.0000 &   174.9344 &  87.4672 & 80.7193 &     0.0000 \\
+Traffic\_Control                                   &     4.0000 &   112.3334 &  28.0833 & 25.9168 &     0.0000 \\
+Rd\_Feature                                        &     4.0000 &    40.4497 &  10.1124 &  9.3323 &     0.0000 \\
+Rd\_Character                                      &     6.0000 &    29.5477 &   4.9246 &  4.5447 &     0.0001 \\
+Rd\_Surface                                        &     4.0000 &    13.3979 &   3.3495 &  3.0911 &     0.0149 \\
+Time\_of\_Day                                       &     5.0000 &    61.2545 &  12.2509 & 11.3058 &     0.0000 \\
+Light                                             &     5.0000 &    48.5578 &   9.7116 &  8.9623 &     0.0000 \\
+ : Rd\_Feature : Rd\_Character                      &    24.0000 &    39.9091 &   1.6629 &  1.5346 &     0.0456 \\
+ : Rd\_Feature : Rd\_Surface                        &    16.0000 &    26.0955 &   1.6310 &  1.5051 &     0.0878 \\
+ : Rd\_Feature : Time\_of\_Day                       &    20.0000 &    27.0867 &   1.3543 &  1.2499 &     0.2017 \\
+ : Rd\_Character : Time\_of\_Day                     &    30.0000 &    27.9352 &   0.9312 &  0.8593 &     0.6862 \\
+ : Rd\_Surface : Time\_of\_Day                       &    20.0000 &    33.3872 &   1.6694 &  1.5406 &     0.0578 \\
+ : Rd\_Feature : Light                             &    20.0000 &    29.9218 &   1.4961 &  1.3807 &     0.1190 \\
+ : Rd\_Character : Light                           &    30.0000 &    47.6300 &   1.5877 &  1.4652 &     0.0483 \\
+ : Rd\_Feature : Rd\_Character : Rd\_Surface         &   120.0000 &   131.8752 &   1.0990 &  1.0142 &     0.4397 \\
+ : Rd\_Feature : Rd\_Surface : Time\_of\_Day          &    80.0000 &   112.4661 &   1.4058 &  1.2974 &     0.0385 \\
+ : Rd\_Feature : Rd\_Character : Light              &   120.0000 &   134.2030 &   1.1184 &  1.0321 &     0.3867 \\
+ : Rd\_Feature : Rd\_Character : Rd\_Surface : Light &   700.0000 &   681.6559 &   0.9738 &  0.8987 &     0.9725 \\
+Residual                                          & 22666.0000 & 24560.8083 &   1.0836 &     NaN &        NaN \\
+\end{longtable}

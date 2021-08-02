@@ -1,0 +1,588 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage[utf8]{inputenc}
+%\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage[top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.99,0.995,0.99}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\large,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\decimalpoint
+%auxiliar commands
+\newcommand{\work}{Tarea-Examen 1: Regresión Lineal}
+\newcommand{\de}[1]{\text{deg}  \left( #1 \right)}
+\newcommand{\dee}[2]{\text{deg}_{#2}  \left( #1 \right)}
+\newcommand{\id}[1]{\text{id}  \left( #1 \right)}
+\newcommand{\od}[1]{\text{od}  \left( #1 \right)}
+\newcommand{\Aut}[1]{\text{Aut}  \left( #1 \right)}
+%changes space between lines of equations
+\setlength{\jot}{10pt}
+%changes space between text and equations
+\setlength{\abovedisplayskip}{100pt}
+\setlength{\belowdisplayskip}{100pt}
+\setlength{\abovedisplayshortskip}{100pt}
+\setlength{\belowdisplayshortskip}{100pt}
+% theorem environment in case I need it
+\newtheorem{theorem}{Teorema}
+%make header
+\pagestyle{fancy}
+\fancyhf{}
+\vspace{1cm}
+\rhead{Aldo Sayeg Pasos Trejo}
+\lhead{\work}
+% Text info
+\title{\textbf{\work}}
+\author{Curso Avanzado de Estadística. Profa. Guillermina Eslava Gómez.\\ \\ Aldo Sayeg Pasos Trejo. \\ \\ Posgrado en Ciencias Matemáticas. Universidad Nacional Autónoma de México. }
+\date{\today}
+\begin{document}
+\maketitle
+\section{Ejercicio 1: Problema 10, capítulo 3 \cite{isl}}
+\subsection{Inciso a)}
+Primero visualizamos la tabla de datos
+\begin{table}[H]
+    \centering
+    \input{1-data.tex}
+    \caption{Datos para el ejercicio}
+\end{table}
+Queremos realizar un ajuste lineal para predecir Sales con las variables Price, Urban y US. El código del modelo se puede encontrar en el anexo 2 y su parámetros se muestran en la siguiente tabla
+\begin{table}[H]
+    \centering
+    \input{1-mod1.tex}
+    \caption{Parámetros del modelo lineal de la ecuación \ref{ec:1-mod}}
+    \label{tab:1-mod1}
+\end{table}
+\subsection{Incisos b),c)}
+El modelo tiene la siguiente forma:
+\begin{equation}
+    \text{Sales} = \beta_0 + \beta_{1} \cdot \text{Price} + \beta_{2} I_{\text{Urban}= \text{NO}}(\text{Urban}) + \beta_{3} I_{\text{US}= \text{NO}}(\text{US})
+\end{equation}
+Dónde $I_{\text{Urban}= \text{NO}}(\text{Urban})$ es una variable indicadora que toma el valor $1$ si $\text{Urban} = \text{Yes}$ y $0$ en el caso contrario. De igual manera, $I_{\text{US}= \text{NO}}(\text{US})$ toma el valor $1$ si $\text{US}= \text{NO}$. 
+\\
+\\Notemos que, de inmediato, podemos interpretar a $\beta_0$ como el valor promedio de Sales cuando US = NO y Urban = NO. $\beta_1$ es la pendiente de Price, es decir, el cambio unitario en Sales por un cambio unitario en Price. $\beta_2$ es una penalización o un cambio del valor promedio de Price para cuando Urban = Yes y, análogamente, $\beta_3$ es otro cambio al valor promedio de Price para cuando US = NO.
+\subsection{Inciso d)}
+Para hacer la prueba de hipótesis $\beta_i = 0$ para cada coeficiente, podemos fijarnos en el p-value de cada variable en la tabla \ref{tab:1-mod1}.
+\\
+\\Se puede ver de manera clara que la variable Urban tiene un p-value demasiado alto, lo que nos invita a aceptar la hipótesis de que $\beta_2 = 0$. Las demás variables si parecen ser repsentativas debido al bajo valor.
+\subsection{Inciso e)}
+Al ajustar un modelo ahora usando solo las variables Price y US, los coeficientes se muestran en la tabla \ref{tab:1-mod2}
+\begin{table}[H]
+    \centering
+    \label{tab:1-mod2}
+    \input{1-mod2.tex}
+    \caption{Parámetros del modelo lineal sin la variable Urban}
+\end{table}
+\subsection{Inciso f)}
+Podemos comparar ambos modelos al analizar sus estadísticas, que se muestran en la tabla \ref{tab:1-modCompar}
+\begin{table}[H]
+    \centering
+    \input{1-modCompar.tex}
+    \caption{Comaparción de modelos}
+    \label{tab:1-modCompar}
+\end{table} 
+Notemos que el coeficiente $R^2$ de ambos tiene el mismo valor en tres cifras significativas. Fijándonos solo en ese indicador, podríamos pensar que no hay una mejora sustancial del modelo. Explícitamente, su diferencia tiene el valor de $1.25 \cdot 10^{-5}$
+\\
+\\Por otro lado, la estadística $F$ tiene un cambio sustancial, que en su pobabilidad se ve reflejada en un orden de magnitud. Nuevamente, eso podría parecer significativo pero el cambio en los ordenes de magnitud de $\mathbb{P}(F)$ va de $10^{-23}$ a $10^{-24}$, lo cual, tomando en cuenta el error numérico de la aritmética de punto flotante, no es realmente representativo.
+\\
+\\En cuanto a los p-values de ambos modelos, notamos que el modelo sin la variable US al menos cuenta con la propiedad de que todos sus p-values son muy bajos.
+\\
+\\En resumen, concluyo que no hay una mejora sustancial en el nuevo modelo.
+\subsection{Inciso g)}
+Los intervalos de confianza para $\alpha = 0.05$ para el modelo sin la variable Urban se pueden encontrar en la tabla \ref{tab:1-inter}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \hline 
+        &  $L$ & $U $ \\
+        \hline 
+        Intercept &    11.790320 & 14.271265 \\
+        C (US)[T.Yes] &  0.691520  & 1.707766 \\
+        Price &        -0.064760 & -0.044195 \\
+        \hline 
+    \end{tabular}
+    \caption{Intervalos de confianza para el modelo sin Urban}
+    \label{tab:1-inter}
+\end{table}
+\subsection{Inciso h)}
+Para analizar si existen outliers o puntos de alta influencia, podemos analizar las gráficas de residuales que se muestran a continuación.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.80\textwidth]{1-resplot.pdf}
+    \caption{Residuales como función del valor ajustado}
+    \label{fig:1-resplot}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{1-restimeplot.pdf}
+    \caption{Residuales como función del índice}
+    \label{fig:1-restimeplot}
+\end{figure}
+En principio, aunque hay una gran cantidad de puntos que tienen un residuo grande, no hay ninguo que destaque en particular por tener un residuo demasiado alejado de los otros. Pensando que este es uno de los mejores criterios para encontrar outliers, podemos concluir que en realidad no existen dichos puntos en nuestro conjunto de datos.
+\\
+\\Podemos ver más figuras del sistema para confirmar dicho hecho:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{1-regdiag.pdf}
+    \caption{Ajuste y CCPR}
+    \label{fig:1-restimeplot}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{1-compcomp.pdf}
+    \caption{Residuales para cada variable}
+    \label{fig:1-compcomp}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{1-qqplot.pdf}
+    \caption{qq-plot para los cuantiles de los residuales}
+    \label{fig:1-qqplot}
+\end{figure}
+En ninguno de estos puntos detectamos outliers en nuestros datos. Por otro lado, para intentar verificar si existen puntos de alta influencia podemos ver la gráfica del coeficiente $H$ en la figura \ref{fig:1-influence}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{1-influence.pdf}
+    \caption{qq-plot para los cuantiles de los residuales}
+    \label{fig:1-influence}
+\end{figure}
+Pensando en la gráfica del coeficiente $H$, aunque tienen un valor pequeño, nos señala a los puntos de datos 42,174 y 165 como posibles puntos de alta influencia. Podemos ver explícitamente sus valores en la base de datos en la tabla \ref{tab:1-outliers}
+\begin{table}[H]
+    \input{1-outliers.tex}
+    \caption{Posibles puntos de alta influencia}
+    \label{tab:1-outliers}
+\end{table}
+Es claro que todos tiene un valor inusual de Price, pero no afirmaría que ninguno es de alta influencia debido a que  su coeficiente $H$ sigue siendo bastante pequeño relativo a los valores esperados para puntos de alto impacto ($H \geq 0.2$) \cite{isl}.
+\section{Ejercicio 1: Problema 10, capítulo 3 \cite{isl}}
+\subsection{Inciso a)}
+Generamos los datos de manera aleatoria como indica el problema y como se muestra en el anexo 2 del reporte, para obtener los datos que muestra en la tabla \ref{tab:2-data}
+\begin{table}[H]
+    \centering
+    \input{2-data.tex}
+    \caption{Posibles puntos de alta influencia}
+    \label{tab:2-data}
+\end{table}
+Nosotros sabemos que los datos tienen la forma:
+\begin{equation}
+    \label{2-mod}
+    \begin{split}
+        y &= \beta_0 + \beta_1 \cdot x1 + \beta_2 \cdot x2 + \epsilon \\
+         &= 2 + 2 \cdot x1 + 0.3 \cdot x2 + \epsilon \\
+         &= 2 + 2 \cdot x1 + 0.3 \cdot 0.5 \cdot x1 + \epsilon \\
+         &= 2 + 2.15 \cdot x1 + \epsilon \\
+    \end{split}
+\end{equation}
+\subsection{Inciso b)}
+La figura \ref{fig:2-corr} muestra un scatter plot entre x1 y x2 así como su correlación
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{2-corr.pdf}
+    \caption{Correlación entre x1 y x2}
+    \label{fig:2-corr}
+\end{figure}
+Aunque, debido a la escala, en la gráfica no se vea de manera muy clara, existe una alta correlación entre ambos puntos, Esto se asenta como un hecho cuando vemos que el valor de $R^2$ es sumamente alto. 
+\subsection{Inciso c)}
+Procedemos a realizar una regresión lineal tomando en cuenta ambas variables, para obtener los coeficientes de la tabla \ref{tab:2-mod1}
+\begin{table}[H]
+    \centering
+    \input{2-mod1.tex}
+    \caption{Coeficientes para el modelo lineal de ambas variables}
+    \label{tab:2-mod1}
+\end{table}
+El valor de los coeficientes obtenidos es sumamente distinto de la ecuación \ref{2-mod}. En particular, $\beta_1$ está muy lejos en valor porcentual del verdadero valor. Fijandonos en los p-values, podríamos aceptar la hipótesis de $\beta_1=0$ y quizá también la de $\beta_2 = 0$. Sin embargo,aunque no es suficientemente bajo, el p-value de $\beta_2$ esta un orden de magnitud abajo del de $\beta_1$, lo que complica la desición de aceptar $\beta_2 = 0$.
+\subsection{Inciso d)}
+Tomando en cuenta solo a x1, obtenemos los coeficientes de la tabla \ref{tab:2-mod2}
+\begin{table}[H]
+    \centering
+    \input{2-mod2.tex}
+    \caption{Coeficientes para el modelo lineal de x1}
+    \label{tab:2-mod2}
+\end{table}
+Es claro que los p-values son sumamente bajos, lo que implica rechazar la hipótesis de que $\beta_1 = 0$.
+\subsection{Inciso e)}
+Por último, tomando en cuenta solo a x2, obtenemos los coeficientes de la tabla \ref{tab:2-mod3}
+\begin{table}[H]
+    \centering
+    \input{2-mod3.tex}
+    \caption{Coeficientes para el modelo lineal de x2}
+    \label{tab:2-mod3}
+\end{table}
+Nuevamente nos inclinamos a rechazar $\beta_1 = 0$  debido al bajo p-value.
+\subsection{Inciso f)}
+Para comparar los tres modelos, podemos ver la tabla \ref{tab:2-modComp}
+que compara las estadísticas imporantes de los tres modelos
+\begin{table}[H]
+    \centering
+    \input{2-modComp.tex}
+    \caption{Comparación de modelos}
+    \label{2-modComp}
+\end{table}
+Notemos que ni el $R^2$ ni el logaritmo de la verosimilitud muestran una mejora sustancial entre los modelos, aunque cabe señalar que el de dos variables tiene el mayor valor. El valor de la estadística $F$ para los tres si tiene un valor distinto, pero la prueba $P(>F)$ no cambia sustancialmente, por lo que nuevamente no encontramos diferencia significativa entre los modelos
+\\
+La respuesta a la pregunta de si estos resultados de los tres incisos anteriores son consistentes entre sí, en principio, pareciera ser que no, que existe una inconsistencia entre ambos.
+\\
+\\Sin embargo, retomando el hecho de que los puntos son colineales y fueron generados añadiendo números aleatorios con distribución normal, se puede explicar que la alta correlación entre sus variables hace más inestable la regresión y hace difícil de comparar la aceptación u rechazo de hipótesis entre los tres casos.
+\subsection{Inciso g)}
+Si añadimos una observación $(x1,x2,y) = (0.1,0.8,0.6)$, podemos primero visualizar el valor en el plano $x1-x2$, mostrado en la figura \ref{fig:2-newData}, para entender si será un punto de alta influencia.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.8\textwidth]{2-newData.pdf}
+    \caption{Nueva observación}
+    \label{fig:2-newData}
+\end{figure}
+Parece ser un dato muy alejado de los valores normales de las otras observaciones, por lo que podría considerarse de alta influencia. Para ver si también es un outlier, podemos realizar los mismos ajustes anteriores:
+\begin{table}[H]
+    \centering
+    \input{2-newMod1.tex}
+    \caption{Coeficientes para el nuevo modelo lineal de ambas variables}
+    \label{tab:2-newMod1}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{2-newMod2.tex}
+    \caption{Coeficientes para el nuevo modelo lineal de x1}
+    \label{tab:2-newMod2}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{2-newMod3.tex}
+    \caption{Coeficientes para el nuevo modelo lineal de x2}
+    \label{tab:2-newMod3}
+\end{table}
+Analizamos ahora el residual estandarizado del nuevo punto en todos los modelos:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lr}
+        \hline
+        Modelo & Residual estandarizado \\
+        \hline
+        $y \sim x1 +x2$ & -20.8429 \\
+        $y \sim x1 $ & -17.1936 \\
+        $y \sim x2$ & -36.8806 \\
+        \hline
+    \end{tabular}
+    \caption{Residual estandarizado}
+    \label{tab:2-newMod3}
+\end{table}
+El valor de su residual estandarizado es muy alto para todos los ajustes, cosa que nos indica también que el punto parece ser un outlier. De ambos valores, podemos concluir que el punto es tanto un outlier como un punto de alta influencia: sus valores tanto en $y$ como en $x1$,$x2$ son inusuales para los del conjunto de datos.
+\\
+\\En general, también observamos que $R^2$ y la estadística $F$ no mejoraron mucho para estos ajustes en comparación con los anteriores. La diferencia más interesante entre estos ajustes y los realizados anteriormente se encuentra en los p-values del ajuste de las dos variables, pues aquí ya no nos permite rechazar la hipótesis de que $\beta_1 = 0$ de manera tan sencilla.
+\\
+\\Los coeficientes del modelo de dos variables también mejoran, aunque no sustancialemente, para asemejarse al modelo original.
+\section{Ejercicio 2}
+Tenemos 23137 observaciones de 14 variables, de las cuales queremos usar 13, todas categóricas, para estimar 1 llamada ``Crash\_Score''. Los datos se pueden observar en la tabla \ref{tab:3-data}
+\begin{table}[H]
+    \centering
+    \input{3-data.tex}
+    \caption{Conjunto de datos}
+    \label{tab:3-data}
+\end{table}
+Queremos encontrar un modelo lineal que ajuste de manera buena los datos. Antes de querer tomar un modelo arbitrario, al estar tratando con variables categóricas, debemos tomar alguna como referencia para cada categoría. 
+\\
+\\Ya que en principio las distribución del Crash\_Score puede cambiar entre categorías de la misma variable, realizamos boxplots e histogramas de el valor del Crash\_Score para cada categoría. A continuación mostramos dos gráficas para categorías distintas en las figuras\ref{fig:3-yearHist} y \ref{fig:3-WeatherHist}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.95\textwidth]{3-yearHist.pdf}
+    \caption{Boxplot e histograma para variable year}
+    \label{fig:3-yearHist}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.95\textwidth]{3-WeatherHist.pdf}
+    \caption{Boxplot e histograma para variable Weather}
+    \label{fig:3-WeatherHist}
+\end{figure}
+Antes que cualquier cosa, la forma del boxplot nos indica que la distribución de la variable no es simétrica. Esto provoca que el análisis inmediato de dichas gráficas no sea tan sencillo. En la figura \ref{fig:3-yearHist} se ve claramente que la distribución por año no tiene ninguna diferencia observable, mientras que en la figura \ref{fig:3-WeatherHist} la única distribución que destaca es la de la categoría ``OTHER'', lo cual se explica en el hecho de que ahí puede haber observaciones o bien mal catalogadas o difíciles de predecir.
+\\
+\\Para ver si existe alguna influencia del tiempo, podemos ver el valor del Crash\_Score como función del tiempo para una variable de tiempo en unidades arbitrarias definida como $(\text{year}-2014) \cdot 12 \cdot 6 + \text{Month} \cdot 6 + \text{Time\_of\_Day}$. La figura \ref{sig} muestra dicha gráfica.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.9\textwidth]{3-timeplot.pdf}
+    \caption{Crash\_Score como función del tiempo}
+    \label{sig}
+\end{figure}
+Es claro que no parece haber ninguna relación simple entre el tiempo y el valor del Crash\_Score. 
+Así, dado que estas observaciones no permiten escoger objetivamente categorías de referencia, se tuvieron que escoger con justificaciones arbitrarias  o de sentido común. La tabla \ref{3-refers} muestra la categoría de referencia para todas las variables
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccp{3cm}}    
+             
+     \hline
+     Variable & Referencia & Justificación \\
+     \hline
+     year  & 2014  & Arbitrario \\
+     & & \\
+     Month  & 10  & Mes sin vacaciones escolares o personales  \\
+     & & \\
+     Time\_of\_Day  & 4  & Horario con hora de comida y no sobrecargado \\
+     & & \\
+     Rd\_Feature  & NONE  & Comparar con caminos normales \\
+     & & \\
+     Rd\_Character  & STRAIGHT-LEVEL  & Compara con caminos sin peralte o curvas \\
+     & & \\
+     Rd\_Class  & OTHER  & Arbitrario \\
+     & & \\
+     Rd\_Configuration  & TWO-WAY-UNPROTECTED-MEDIAN  & Camino más representativo \\
+     & & \\
+     Rd\_Surface  & SMOOTH ASPHALT  & Material más representativo \\
+     & & \\
+     Rd\_Conditions  & OTHER  & Arbitrario \\
+     & & \\
+     Light  & DAYLIGHT  & Luz más estándar \\
+     & & \\
+     Weather  & CLEAR  & Clima más estándar \\
+     & & \\
+     Traffic\_Control  & NONE  & Arbitrario \\
+     & & \\
+     Work\_Area & NO & Quitar influencia por tráfico \\
+     & & \\
+     \hline
+    \end{tabular}
+    \caption{Referencias para cada variable categórica}
+    \label{tab:3-data}
+\end{table}
+Se ajustaron en total 7 modelos a los datos, cuyas ecuaciones mostramos a continuación
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c | p{15cm}}
+        \hline
+        Modelo & Ecuación \\
+        \hline
+        0 & Crash\_Score ~  + year + Month + Time\_of\_Day + Rd\_Feature   + Rd\_Character   + Rd\_Class   + Rd\_Configuration + Rd\_Surface  T + Rd\_Conditions   + Light   + Weather   + Traffic\_Control   + Work\_Area   \\
+        1 & Crash\_Score\_boxcox\_0\_27 ~  + year + Month + Time\_of\_Day + Rd\_Feature   + Rd\_Character   + Rd\_Class   + Rd\_Configuration + Rd\_Surface  T + Rd\_Conditions   + Light   + Weather   + Traffic\_Control   + Work\_Area   \\
+        2 & Crash\_Score\_boxcox\_0\_27 ~  + Time\_of\_Day + Rd\_Feature   + Rd\_Character   + Rd\_Class   + Rd\_Surface  T + Light   + Traffic\_Control   \\
+        3 & Crash\_Score\_boxcox\_0\_27 ~  + Rd\_Class   + Traffic\_Control   + Time\_of\_Day*Light + Rd\_Feature*Rd\_Character*Rd\_Surface \\
+        4 & Crash\_Score\_boxcox\_0\_27 ~  + Rd\_Class   + Traffic\_Control   + Rd\_Feature*Rd\_Character*Rd\_Surface*Time\_of\_Day + Rd\_Feature*Rd\_Character*Rd\_Surface*Light \\
+        5 & Crash\_Score\_boxcox\_0\_27 ~ + Rd\_Class + Traffic\_Control + Rd\_Feature+ Rd\_Character+ Rd\_Surface+ Time\_of\_Day+ Light+ Rd\_Feature:Rd\_Character+ Rd\_Feature:Rd\_Surface+ Rd\_Feature:Time\_of\_Day+ Rd\_Character:Time\_of\_Day+ Rd\_Surface:Time\_of\_Day+ Rd\_Feature:Light+ Rd\_Character:Light+ Rd\_Feature:Rd\_Character:Rd\_Surface+ Rd\_Feature:Rd\_Surface:Time\_of\_Day+ Rd\_Feature:Rd\_Character:Light+ Rd\_Feature:Rd\_Character:Rd\_Surface:Light \\
+        6 & Crash\_Score\_boxcox\_0\_27 ~ + Rd\_Class + Traffic\_Control + Rd\_Feature+ Rd\_Character+ Rd\_Surface+ Time\_of\_Day+ Light+ Rd\_Feature:Rd\_Character+ Rd\_Feature:Rd\_Surface+ Rd\_Surface:Time\_of\_Day+ Rd\_Character:Light+ Rd\_Feature:Rd\_Surface:Time\_of\_Day+ Rd\_Feature:Rd\_Character:Rd\_Surface:Light \\
+        \hline
+    \end{tabular}
+    \caption{Ecuaciones de cada modelo}
+    \label{3-comparison}
+\end{table}
+La variable ``Crash\_Score\_boxcox\_0\_27'' representa a ``Crash\_Score'' después de haber realizado un transformación Box-Cox con $\lambda = 0.27$. Se tomó ese valor de lambda pues ese era el que maximizaba el logaritmo de la verosimilitud, como se muestra en la figura \ref{fig:3-boxcox}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.6\textwidth]{3-boxcox.pdf}
+    \caption{verosimilitud como función de $\lambda$ para transformaciones boxcox de la variable Crash\_Score}
+    \label{fig:3-boxcox}
+\end{figure}
+Empezamos en el modelo 0, un modelo lineal normal, y luego pasamos al modelo 1 haciendo la transformación boxcox. Para pasar al modelo 2, buscábamos reducir las variables.
+\\
+\\Para reducir variables, se utilizó también un script de R que, utilizando la función \text{step{stats}}, reducía las variables de modelo hasta obtener un conjunto más pequeño fijándose en el criterio AIC. Las variables que quedaron en el modelo fueron Time\_of\_Day, Rd\_Feature  , Rd\_Character  , Rd\_Class  , Rd\_Surface  T, Light  y Traffic\_Control. Este resultado también era consistente con el análisis ANOVA de las variables para el modelo 1. El modelo 2 trabajaba exactamente con estas variables de manera lineal.
+\\
+\\Los modelos 3-6 trabajan con las mismas variables pero realizando distintas interacciones. Las interacciones fueron definidas de manera arbitraria, aunque se buscó que interactuaran entre ellas variables que no tiene mucha relación en el plano semántico (Time\_of\_Day con las características del camino, por ejemplo)
+\\
+\\Para analizar a fondo la representabilidad de las variables de cada modelo, remitimos al lector al anexo 1 del presente trabajo donde se muestran las tablas ANOVA de cada modelo. No se pueden presentar las tablas de los p-values e intervalos de confianza de todas las variables ya que, al codificarse en variables dummies, el número de variables crece considerablemente y no es posible incluir esa información en el presente trabajo
+\\
+\\Finalmente, presentamos la siguiente tabla comparando todos los modelos realizados
+\begin{table}[H]
+    \centering
+    \input{3-comparison.tex}
+    \caption{Comparación de modelos}
+    \label{3-comparison}
+\end{table}
+Fijándo la atención en el parámetro $R^2$, es claro que el modelo 4 presenta el valor más grande de este parámetro. Para $P(> F)$, dicho modelo no presenta el mejor valor. En cuanto al logaritmo de la verosimilitud, es claro que el modelo 4 también presenta el máximo valor de todos los otros modelos. Revisando su qqplot en la figura \ref{qqplotok}, confirmamos su adecuación.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.7\textwidth]{3-qqplot4.pdf}
+    \caption{Q-Q Plot de los residuales del modelo 4}
+    \label{qqplotok}
+\end{figure}
+Así, podemos concluir que el modelo 4 presenta el mejor ajuste y, tomando en cuenta el valor $R^2$, es el que presenta mayor estabilidad para predicción. Lo distintivo del model es que toma en cuenta las interacciones de la luz del día y la hora con las características del camino. Podemos interpretar que estas interacciones son las más significativas a la hora de predecir cuando puede darse un accidente de tráfico: cuando las características climáticas y la visibilidad, representadas por la luz del día, al igual que el tráfico, representado por la hora, interactúan con las características del camino.
+\pagebreak
+\section*{Anexo 1: Tablas Anova y de Coeficientes de los modelos del ejercicio 2}
+\subsection*{Modelo 0}
+\input{3-mod0Anova.tex}
+\begin{table}[H]
+    \centering
+    \caption{ANOVA para modelo 0}
+    \label{3-mod0Anova}
+\end{table}
+\subsection*{Modelo 1}
+\input{3-mod1Anova.tex}
+\begin{table}[H]
+    \centering
+    \caption{ANOVA para modelo 1}
+    \label{3-mod1Anova}
+\end{table}
+\subsection*{Modelo 2}
+\input{3-mod2Anova.tex}
+\begin{table}[H]
+    \centering
+    \caption{ANOVA para modelo 2}
+    \label{3-mod2Anova}
+\end{table}
+\subsection*{Modelo 3}
+\input{3-mod3Anova.tex}
+\begin{table}[H]
+    \centering
+    \caption{ANOVA para modelo 3}
+    \label{3-mod3Anova}
+\end{table}
+\subsection*{Modelo 4}
+\input{3-mod4Anova.tex}
+\begin{table}[H]
+    \centering
+    \caption{ANOVA para modelo 4}
+    \label{3-mod4Anova}
+\end{table}
+\subsection*{Modelo 5}
+\input{3-mod5Anova.tex}
+\begin{table}[H]
+    \centering
+    \caption{ANOVA para modelo 5}
+    \label{3-mod5Anova}
+\end{table}
+\subsection*{Modelo 6}
+\input{3-mod6Anova.tex}
+\begin{table}[H]
+    \centering
+    \caption{ANOVA para modelo 6}
+    \label{3-mod6Anova}
+\end{table}
+%\input{3-mod5Anova.tex}
+%\begin{table}[H]
+%    \centering
+%    \input{3-mod0Cof.tex}
+%    \caption{Coeficientes para modelo 0}
+%    \label{3-mod0Cof}
+%\end{table}
+%\begin{table}[H]
+%    \centering
+%    \input{3-mod0Anova.tex}
+%    \caption{ANOVA para modelo 0}
+%    \label{3-mod0Anova}
+%\end{table}
+\begin{comment}
+    \subsection*{Modelo 0}
+\begin{table}[H]
+    \centering
+    \input{3-mod0Cof.tex}
+    \caption{Coeficientes para modelo 0}
+    \label{3-mod0Cof}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{3-mod0Anova.tex}
+    \caption{ANOVA para modelo 0}
+    \label{3-mod0Anova}
+\end{table}
+\subsection*{Modelo 1}
+\begin{table}[H]
+    \centering
+    \input{3-mod1Cof.tex}
+    \caption{Coeficientes para modelo 1}
+    \label{3-mod1Cof}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{3-mod1Anova.tex}
+    \caption{ANOVA para modelo 1}
+    \label{3-mod1Anova}
+\end{table}
+\subsection*{Modelo 2}
+\begin{table}[H]
+    \centering
+    \input{3-mod2Cof.tex}
+    \caption{Coeficientes para modelo 2}
+    \label{3-mod2Cof}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{3-mod2Anova.tex}
+    \caption{ANOVA para modelo 2}
+    \label{3-mod2Anova}
+\end{table}
+\subsection*{Modelo 3}
+\begin{table}[H]
+    \centering
+    \input{3-mod3Cof.tex}
+    \caption{Coeficientes para modelo 3}
+    \label{3-mod3Cof}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{3-mod3Anova.tex}
+    \caption{ANOVA para modelo 3}
+    \label{3-mod3Anova}
+\end{table}
+\subsection*{Modelo 4}
+\begin{table}[H]
+    \centering
+    \input{3-mod4Cof.tex}
+    \caption{Coeficientes para modelo 4}
+    \label{3-mod4Cof}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{3-mod4Anova.tex}
+    \caption{ANOVA para modelo 4}
+    \label{3-mod4Anova}
+\end{table}
+\subsection*{Modelo 5}
+\begin{table}[H]
+    \centering
+    \input{3-mod5Cof.tex}
+    \caption{Coeficientes para modelo 5}
+    \label{3-mod5Cof}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{3-mod5Anova.tex}
+    \caption{ANOVA para modelo 5}
+    \label{3-mod5Anova}
+\end{table}
+\subsection*{Modelo 6}
+\begin{table}[H]
+    \centering
+    \input{3-mod6Cof.tex}
+    \caption{Coeficientes para modelo 6}
+    \label{3-mod6Cof}
+\end{table}
+\begin{table}[H]
+    \centering
+    \input{3-mod6Anova.tex}
+    \caption{ANOVA para modelo 6}
+    \label{3-mod6Anova}
+\end{table}
+\end{comment}
+\section*{Anexo 2: código en Python de los problemas}
+\lstinputlisting[language=Python]{tarea1.py}
+\begin{thebibliography}{9}
+    \bibitem{isl} Hastie et al. \textit{An Introduction to Statitistical Learning}. Editorial Springer.  Séptima edición. 2013.
+\end{thebibliography}
+\end{document}

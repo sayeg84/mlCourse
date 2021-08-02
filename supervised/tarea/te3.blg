@@ -1,0 +1,14 @@
+[0] Config.pm:302> INFO - This is Biber 2.9
+[1] Config.pm:305> INFO - Logfile is 'te3.blg'
+[34] biber:313> INFO - === Mon Apr  6, 2020, 21:37:05
+[102] Biber.pm:371> INFO - Reading 'te3.bcf'
+[164] Biber.pm:857> INFO - Found 3 citekeys in bib section 0
+[208] Biber.pm:3981> INFO - Processing section 0
+[239] Biber.pm:4154> INFO - Looking for bibtex format file '../../referencias.bib' for section 0
+[252] bibtex.pm:1468> INFO - LaTeX decoding ...
+[272] bibtex.pm:1294> INFO - Found BibTeX data source '../../referencias.bib'
+[317] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[318] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[318] Biber.pm:3809> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'es-ES'
+[333] bbl.pm:617> INFO - Writing 'te3.bbl' with encoding 'UTF-8'
+[339] bbl.pm:720> INFO - Output to te3.bbl
